@@ -13,5 +13,23 @@
     <div id="gameArea">
         <div id="target"></div>
     </div>
+    
+    <script>
+        const target = document.getElementById("target");
+        const gameArea = document.getElementById("gameArea");
+
+
+        function moveTarget(){
+            const maxX = gameArea.clientWidth - target.clientWidth;
+            const maxY = gameArea.clientHeight - target.clientHeight;
+
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+
+            target.style.left = x + "px";
+            target.style.top = y + "px";
+        }
+        moveTarget();
+    </script>
 </body>
 </html>
