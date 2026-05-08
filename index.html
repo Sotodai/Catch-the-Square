@@ -8,7 +8,8 @@
 </head>
 <body>
     <h1>Лови квадрат</h1>
-    <p>Очки: <span id="score"></span></p>
+    <p>Очки: <span id="score">0</span></p>
+    <p>Час: <span id="time">30<span></p>
 
     <div id="gameArea">
         <div id="target"></div>
@@ -18,7 +19,12 @@
         const target = document.getElementById("target");
         const gameArea = document.getElementById("gameArea");
         const scoreDisplay = document.getElementById("score");
+        const timeDisplay = document.getElementById("time");
+
         let score = 0;
+        let time = 30;
+        let size = 60;
+        let gameOver = false;
 
         function moveTarget(){
             const maxX = gameArea.clientWidth - target.clientWidth;
@@ -31,11 +37,35 @@
             target.style.top = y + "px";
         }
 
-        target.addEventListener("click", () => {
+        target.addEventListener("click", (e) => {
+            e.stopPropagation();
+
             score++;
             scoreDisplay.textContent = score;
+
+            size *= 0.95;
+            target.style.width = size + "px";
+            target.style.height = size + "px";
+
             moveTarget();
         });
+
+        gameArea.addEventListener("click", () => {
+            score--;
+            scoreDisplay.textContent = score;
+        });
+
+        const timer = setInterval(() => {
+            time--;
+            timeDisplay.textContent = time;
+
+            if(time <= 0){
+                clearInterval(timer);
+                gameOver = true;
+                alert("⏱ Час вийшов! Очки: " + score);
+            }
+        }, 1000);
+
         moveTarget();
     </script>
 </body>
